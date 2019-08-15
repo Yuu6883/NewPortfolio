@@ -1,8 +1,7 @@
 const $ = require("jquery");
-const THREE = require();
+const THREE = require("three");
 
-const camera, scene, renderer;
-const geometry, material, mesh;
+let camera, scene, renderer, geometry, material, mesh;
  
 const init = () => {
  
@@ -33,5 +32,7 @@ const animate = () => {
     renderer.render(scene, camera);
 }
 
-init();
-animate();
+$(document).ready(() => {
+    init();
+    animate();
+});
