@@ -1,0 +1,24 @@
+{
+  "name": "newportfolio",
+  "version": "1.0.0",
+  "description": "COGS187A",
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify src/main.js > assets/js/bundle.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yuu6883/NewPortfolio.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yuu6883/NewPortfolio/issues"
+  },
+  "homepage": "https://github.com/Yuu6883/NewPortfolio#readme",
+  "dependencies": {
+    "jquery": "^3.4.1",
+    "three": "^0.107.0"
+  }
+}
