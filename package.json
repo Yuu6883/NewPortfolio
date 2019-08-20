@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Yuu6883/NewPortfolio#readme",
   "dependencies": {
     "jquery": "^3.4.1",
+    "pixi.js": "^5.1.1",
     "three": "^0.107.0"
   }
 }
