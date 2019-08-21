@@ -96,13 +96,15 @@ const init = () => {
         let content = $(this).children().eq(1);
 
         if (content.text() === "Night Mode") {
+            $(".logo").removeClass("night-logo").addClass("light-logo");
+            $(".nav-button").removeClass("theme-color").addClass("white");
 
-            $(".logo").addClass("night-logo").removeClass("light-logo");
             nightMode();
             content.text("Light Mode");
         } else {
-            
-            $(".logo").removeClass("night-logo").addClass("light-logo");
+            $(".logo").addClass("night-logo").removeClass("light-logo");
+            $(".nav-button").addClass("theme-color").removeClass("white");
+
             lightMode();
             content.text("Night Mode");
         }

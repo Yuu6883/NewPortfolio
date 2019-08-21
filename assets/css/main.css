@@ -2,9 +2,8 @@
     --light-theme-background: rgb(1, 88, 127);
 }
 
-.theme {
-    background-color: var(--light-theme-background)!important;
-    color: white!important;
+.theme-color {
+    color: var(--light-theme-background)!important;
 }
 
 body, html {
@@ -34,6 +33,34 @@ body {
     padding-right: 5px;
     bottom: 10px;
     right: 10px;
+    background-color: transparent;
+    color: white;
+}
+
+.white {
+    color: white!important;
+}
+
+.nav-button {
+    margin-top: 16px!important;
+    background-color: transparent!important;
+    padding: 0px;
+    color: white;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+#nav-bar {
+    position: absolute;
+    left: 50%;
+    margin-left: -170px;
+    width: 340px;
 }
 
 .logo {
