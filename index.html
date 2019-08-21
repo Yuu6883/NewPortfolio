@@ -2,17 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1, minimum-scale=1, height=device-height, target-densitypi=device-dpi">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/css/uikit-core.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/js/uikit-core.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/js/uikit-icons.min.js"></script>
     <title>Portfolio</title>
 </head>
 <body>
-    <img src="assets/img/logo.gif" class="logo">
-    <img src="assets/img/logo.png" class="logo logo-static" style="display: none">
+    
+    <div id="main-panel">
+        <div id="title-bar">
+            <button class="uk-button theme" id="toggle">
+                <span class="glyphicon glyphicon-adjust"></span>
+                <span>Night Mode</span>
+            </button>
+        </div>
+        <img src="assets/img/logo.gif" class="logo">
+        <img src="assets/img/logo.png" class="logo logo-static light-logo" style="display: none">
+    </div>
 
     <img hidden src="./assets/img/night.png" id="night-texture">
     <img hidden src="./assets/img/light.png" id="light-texture">
@@ -22,7 +32,6 @@
     <img hidden src="./assets/img/geisel-light.jpg" id="geisel-light-texture">
     <img hidden src="./assets/img/geisel-map.jpg" id="geisel-texture-map">
     
-    <button class="uk-button uk-button-primary" id="toggle">Night Mode</button>
     <script src="./assets/js/bundle.js"></script>
 </body>
 </html>

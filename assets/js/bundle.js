@@ -54842,7 +54842,7 @@ exports.middleware = index;
 
 
 },{"mini-signals":48,"parse-uri":50}],53:[function(require,module,exports){
-const $ = require("jquery");
+const $ = window.$ = require("jquery");
 const PIXI = require("pixi.js");
 
 $(window).on("load", () => {
@@ -54852,7 +54852,7 @@ $(window).on("load", () => {
         $(".logo-static")
             .show()
             .animate({ top: "60%" }, 200, function() {
-                $(this).animate({ top: "0%", marginTop: "20px" }, 500, init);
+                $(this).animate({ top: "0%", marginTop: "10px" }, 500, init);
             });
     }, 600);
     
@@ -54860,15 +54860,18 @@ $(window).on("load", () => {
 
 const clamp = (value, min, max) => value < min ? min : (value > max ? max : value);
 
+const DesktopFactor = 80;
+const MobileFactor = 30;
+
 const init = () => {
 
     let app = new PIXI.Application({ width: window.innerWidth, height: window.innerHeight, backgroundColor: 0xffffff });
+    app.renderer.plugins.interaction.autoPreventDefault = false;
 
     $(app.view)
         .css("position", "fixed")
         .css("top", "0px")
         .css("left", "0px")
-        .css("z-index", -99)
         .css("display", "none")
         .fadeIn(1000);
 
@@ -54897,7 +54900,14 @@ const init = () => {
     let lastEvent;
 
     /** @param {JQuery.MouseMoveEvent|JQuery.TouchMoveEvent} e */
-    const changeView = e => {
+    const changeView = (e, touch) => {
+        
+        if (touch) {
+            // console.log(currentPos.x, currentPos.y);
+            e.clientX = e.touches[0].pageX;
+            e.clientY = e.touches[0].pageY;
+        }
+
         if (!lastEvent) return void(lastEvent = e);
         let deltaX = e.clientX - lastEvent.clientX; 
         let deltaY = e.clientY - lastEvent.clientY;
@@ -54908,12 +54918,15 @@ const init = () => {
         currentPos.x = x = clamp(x, -lightBackground.width / 2, lightBackground.width / 2);
         currentPos.y = y = clamp(y, -lightBackground.height / 2, lightBackground.height / 2);
 
-        depthFilter.scale.set(x / 80, y / 80);
+        let factor = touch ? MobileFactor : DesktopFactor;
+        depthFilter.scale.set(x / factor, y / factor);
 
         lastEvent = e;
     }
 
-    $(window).bind("mousemove", changeView).bind("touchmove", changeView);
+    $(window)
+        .bind("mousemove", changeView)
+        .bind("touchmove", e => changeView(e, true));
 
     const lightMode = () => lightBackground.alpha >= 1 ? lightBackground.alpha = 1 :
         (lightBackground.alpha += 0.05, requestAnimationFrame(lightMode));
@@ -54923,14 +54936,19 @@ const init = () => {
         (lightBackground.alpha -= 0.05, requestAnimationFrame(nightMode));
 
     $("#toggle").click(function() {
-        if (this.textContent === "Night Mode") {
 
+        let content = $(this).children().eq(1);
+
+        if (content.text() === "Night Mode") {
+
+            $(".logo").addClass("night-logo").removeClass("light-logo");
             nightMode();
-            this.textContent = "Light Mode";
+            content.text("Light Mode");
         } else {
             
+            $(".logo").removeClass("night-logo").addClass("light-logo");
             lightMode();
-            this.textContent = "Night Mode";
+            content.text("Night Mode");
         }
     });
 
