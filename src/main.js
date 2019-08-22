@@ -40,12 +40,10 @@ const init = () => {
     let mobile = (window.innerWidth < window.innerHeight);
     let lightBackground = PIXI.Sprite.from($(mobile ? "#geisel-light-texture" : "#light-texture")[0]);
     let nightBackground = PIXI.Sprite.from($(mobile ? "#geisel-night-texture" : "#night-texture")[0]);
+    let textureMap = PIXI.Sprite.from($(mobile ? "#geisel-texture-map" : "#texture-map")[0]);
 
     app.stage.addChild(nightBackground);
     app.stage.addChild(lightBackground);
-
-    let textureMap = PIXI.Sprite.from($(mobile ? "#geisel-texture-map" : "#texture-map")[0]);
-
     app.stage.addChild(textureMap);
 
     let depthFilter = new PIXI.filters.DisplacementFilter(textureMap);
@@ -63,7 +61,6 @@ const init = () => {
     const changeView = (e, touch) => {
         
         if (touch) {
-            // console.log(currentPos.x, currentPos.y);
             e.clientX = e.touches[0].pageX;
             e.clientY = e.touches[0].pageY;
             e.preventDefault();

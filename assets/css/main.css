@@ -53,14 +53,6 @@ span {
     color: white;
 }
 
-.left {
-    float: left;
-}
-
-.right {
-    float: right;
-}
-
 #nav-bar {
     position: absolute;
     left: 50%;
