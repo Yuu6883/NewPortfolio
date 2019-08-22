@@ -54960,18 +54960,24 @@ const init = () => {
     });
 
     const resize = () => {
+        
         app.view.width = app.view.style.width = window.innerWidth;
         app.view.height = app.view.style.height = window.innerHeight;
 
-        lightBackground.position.set(window.innerWidth / 2, window.innerHeight / 2);
-        nightBackground.position.set(window.innerWidth / 2, window.innerHeight / 2);
-        textureMap.position.set(window.innerWidth / 2, window.innerHeight / 2);
+        let hw = window.innerWidth / 2, hh = window.innerHeight / 2;
+        lightBackground.position.set(hw, hh);
+        nightBackground.position.set(hw, hh);
+        textureMap.position.set(hw, hh);
 
-        let ratio = window.innerHeight / window.innerWidth;
+        let ratio = hh / hw;
+        let scale = ratio > lightBackground.height / lightBackground.width ?
+            window.innerHeight / lightBackground.height :
+            window.innerWidth / lightBackground.width;
 
-        if (ratio > lightBackground.height / lightBackground.width) {
-            
-        }
+        textureMap.scale.set(scale);
+        nightBackground.scale.set(scale);
+        lightBackground.scale.set(scale);
+
     }
     
     $(window).resize(resize);
