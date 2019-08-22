@@ -3,6 +3,7 @@
 }
 
 .theme-color {
+    border-color: var(--light-theme-background)!important;
     color: var(--light-theme-background)!important;
 }
 
@@ -16,6 +17,10 @@ body, html {
 
 body {
     position: relative;
+}
+
+span {
+    font-weight: bold;
 }
 
 #main-panel {
@@ -61,6 +66,9 @@ body {
     left: 50%;
     margin-left: -170px;
     width: 340px;
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
+    border-bottom-color: white;
 }
 
 .logo {
@@ -72,6 +80,7 @@ body {
     width: 80px;
     height: 80px;
     border-radius: 50%;
+    z-index: 100;
 }
 
 .light-logo {
@@ -87,8 +96,6 @@ body {
 #title-bar {
     display: block;
     height: 110px;
-    background: rgb(255,255,255);
-    background: linear-gradient(rgba(255,255,255,0.5) 20%, rgba(243,253,255,0) 100%);
 }
 
 ::-webkit-scrollbar {

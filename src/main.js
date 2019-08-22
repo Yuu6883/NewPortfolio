@@ -8,7 +8,11 @@ $(window).on("load", () => {
         $(".logo-static")
             .show()
             .animate({ top: "60%" }, 200, function() {
-                $(this).animate({ top: "0%", marginTop: "10px" }, 500, init);
+                $(this).animate({ top: "0%", marginTop: "10px" }, 500, () => {
+                    $(this).addClass("night-logo");
+                    $("#main-panel").fadeIn();
+                    init();
+                });
             });
     }, 600);
     
@@ -62,6 +66,7 @@ const init = () => {
             // console.log(currentPos.x, currentPos.y);
             e.clientX = e.touches[0].pageX;
             e.clientY = e.touches[0].pageY;
+            e.preventDefault();
         }
 
         if (!lastEvent) return void(lastEvent = e);
@@ -95,15 +100,15 @@ const init = () => {
 
         let content = $(this).children().eq(1);
 
+        $(".logo").toggleClass("night-logo light-logo");
+        $(".nav-button").toggleClass("theme-color white");
+        $("#nav-bar").toggleClass("theme-color");
+
         if (content.text() === "Night Mode") {
-            $(".logo").removeClass("night-logo").addClass("light-logo");
-            $(".nav-button").removeClass("theme-color").addClass("white");
 
             nightMode();
             content.text("Light Mode");
         } else {
-            $(".logo").addClass("night-logo").removeClass("light-logo");
-            $(".nav-button").addClass("theme-color").removeClass("white");
 
             lightMode();
             content.text("Night Mode");
