@@ -13,6 +13,7 @@ body, html {
     height: 100%;
     background-color: transparent;
     overflow: hidden;
+    touch-action: none;
 }
 
 body {
@@ -73,15 +74,6 @@ span {
     height: 80px;
     border-radius: 50%;
     z-index: 100;
-}
-
-.light-logo {
-    background-color: rgba(255,255,255, 0.3);
-    border: 5px solid white;
-}
-
-.night-logo {
-    background-color: rgba(255, 255, 255, 0.1);
     border: 5px solid var(--light-theme-background);
 }
 

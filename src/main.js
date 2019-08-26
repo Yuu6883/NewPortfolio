@@ -63,7 +63,6 @@ const init = () => {
         if (touch) {
             e.clientX = e.touches[0].pageX;
             e.clientY = e.touches[0].pageY;
-            e.preventDefault();
         }
 
         if (!lastEvent) return void(lastEvent = e);
@@ -77,7 +76,7 @@ const init = () => {
         currentPos.y = y = clamp(y, -lightBackground.height / 2, lightBackground.height / 2);
 
         let factor = touch ? MobileFactor : DesktopFactor;
-        depthFilter.scale.set(x / factor, y / factor);
+        depthFilter.scale.set(x / factor, y / factor / (touch ? 2 : 1));
 
         lastEvent = e;
     }
@@ -86,29 +85,47 @@ const init = () => {
         .bind("mousemove", changeView)
         .bind("touchmove", e => changeView(e, true));
 
-    const lightMode = () => lightBackground.alpha >= 1 ? lightBackground.alpha = 1 :
-        (lightBackground.alpha += 0.05, requestAnimationFrame(lightMode));
+    let modeChanging = false;
+
+    const lightMode = () => {
+        if (lightBackground.alpha >= 1) {
+            lightBackground.alpha = 1;
+            modeChanging = false;
+        } else {
+            lightBackground.alpha += 0.05, requestAnimationFrame(lightMode);
+            modeChanging = true;
+        }
+    }
 
     
-    const nightMode = () => lightBackground.alpha <= 0 ? lightBackground.alpha = 0 :
-        (lightBackground.alpha -= 0.05, requestAnimationFrame(nightMode));
+    const nightMode = () => {
+        if (lightBackground.alpha <= 0) {
+            lightBackground.alpha = 0;
+            modeChanging = false;
+        } else {
+            lightBackground.alpha -= 0.05, requestAnimationFrame(nightMode);
+            modeChanging = true;
+        }
+    }
 
     $("#toggle").click(function() {
 
+        if (modeChanging) return;
+        
         let content = $(this).children().eq(1);
 
-        $(".logo").toggleClass("night-logo light-logo");
-        $(".nav-button").toggleClass("theme-color white");
-        $("#nav-bar").toggleClass("theme-color");
-
         if (content.text() === "Night Mode") {
-
+            // Switching to night mode
             nightMode();
             content.text("Light Mode");
+            $(":root").prop("style").setProperty("--light-theme-background", " white ");
+            $(".logo").css("backgroundColor", "rgba(255,255,255, 0.4)");
         } else {
-
+            // Switching to light mode
             lightMode();
             content.text("Night Mode");
+            $(":root").prop("style").setProperty("--light-theme-background", " rgb(1, 88, 127) ");
+            $(".logo").css("backgroundColor", "rgba(255,255,255, 0.1)");
         }
     });
 
@@ -127,9 +144,11 @@ const init = () => {
             window.innerHeight / lightBackground.height :
             window.innerWidth / lightBackground.width;
 
-        textureMap.scale.set(scale);
-        nightBackground.scale.set(scale);
-        lightBackground.scale.set(scale);
+        // console.log(`Image Ratio: ${(lightBackground.height / lightBackground.width).toFixed(3)}`);
+
+        textureMap.scale.set(scale + 0.1);
+        nightBackground.scale.set(scale + 0.1);
+        lightBackground.scale.set(scale + 0.1);
 
     }
     

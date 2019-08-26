@@ -54884,12 +54884,10 @@ const init = () => {
     let mobile = (window.innerWidth < window.innerHeight);
     let lightBackground = PIXI.Sprite.from($(mobile ? "#geisel-light-texture" : "#light-texture")[0]);
     let nightBackground = PIXI.Sprite.from($(mobile ? "#geisel-night-texture" : "#night-texture")[0]);
+    let textureMap = PIXI.Sprite.from($(mobile ? "#geisel-texture-map" : "#texture-map")[0]);
 
     app.stage.addChild(nightBackground);
     app.stage.addChild(lightBackground);
-
-    let textureMap = PIXI.Sprite.from($(mobile ? "#geisel-texture-map" : "#texture-map")[0]);
-
     app.stage.addChild(textureMap);
 
     let depthFilter = new PIXI.filters.DisplacementFilter(textureMap);
@@ -54907,10 +54905,8 @@ const init = () => {
     const changeView = (e, touch) => {
         
         if (touch) {
-            // console.log(currentPos.x, currentPos.y);
             e.clientX = e.touches[0].pageX;
             e.clientY = e.touches[0].pageY;
-            e.preventDefault();
         }
 
         if (!lastEvent) return void(lastEvent = e);
@@ -54924,7 +54920,7 @@ const init = () => {
         currentPos.y = y = clamp(y, -lightBackground.height / 2, lightBackground.height / 2);
 
         let factor = touch ? MobileFactor : DesktopFactor;
-        depthFilter.scale.set(x / factor, y / factor);
+        depthFilter.scale.set(x / factor, y / factor / (touch ? 2 : 1));
 
         lastEvent = e;
     }
@@ -54933,34 +54929,52 @@ const init = () => {
         .bind("mousemove", changeView)
         .bind("touchmove", e => changeView(e, true));
 
-    const lightMode = () => lightBackground.alpha >= 1 ? lightBackground.alpha = 1 :
-        (lightBackground.alpha += 0.05, requestAnimationFrame(lightMode));
+    let modeChanging = false;
+
+    const lightMode = () => {
+        if (lightBackground.alpha >= 1) {
+            lightBackground.alpha = 1;
+            modeChanging = false;
+        } else {
+            lightBackground.alpha += 0.05, requestAnimationFrame(lightMode);
+            modeChanging = true;
+        }
+    }
 
     
-    const nightMode = () => lightBackground.alpha <= 0 ? lightBackground.alpha = 0 :
-        (lightBackground.alpha -= 0.05, requestAnimationFrame(nightMode));
+    const nightMode = () => {
+        if (lightBackground.alpha <= 0) {
+            lightBackground.alpha = 0;
+            modeChanging = false;
+        } else {
+            lightBackground.alpha -= 0.05, requestAnimationFrame(nightMode);
+            modeChanging = true;
+        }
+    }
 
     $("#toggle").click(function() {
 
+        if (modeChanging) return;
+        
         let content = $(this).children().eq(1);
 
-        $(".logo").toggleClass("night-logo light-logo");
-        $(".nav-button").toggleClass("theme-color white");
-        $("#nav-bar").toggleClass("theme-color");
-
         if (content.text() === "Night Mode") {
-
+            // Switching to night mode
             nightMode();
             content.text("Light Mode");
+            $(":root").prop("style").setProperty("--light-theme-background", " white ");
+            $(".logo").css("backgroundColor", "rgba(255,255,255, 0.4)");
         } else {
-
+            // Switching to light mode
             lightMode();
             content.text("Night Mode");
+            $(":root").prop("style").setProperty("--light-theme-background", " rgb(1, 88, 127) ");
+            $(".logo").css("backgroundColor", "rgba(255,255,255, 0.1)");
         }
     });
 
     const resize = () => {
-        
+
         app.view.width = app.view.style.width = window.innerWidth;
         app.view.height = app.view.style.height = window.innerHeight;
 
@@ -54974,13 +54988,15 @@ const init = () => {
             window.innerHeight / lightBackground.height :
             window.innerWidth / lightBackground.width;
 
-        textureMap.scale.set(scale);
-        nightBackground.scale.set(scale);
-        lightBackground.scale.set(scale);
+        // console.log(`Image Ratio: ${(lightBackground.height / lightBackground.width).toFixed(3)}`);
+
+        textureMap.scale.set(scale + 0.1);
+        nightBackground.scale.set(scale + 0.1);
+        lightBackground.scale.set(scale + 0.1);
 
     }
     
-    $(window).resize(resize);
+    $(window).resize(resize).bind("orientationchange", resize);
     resize();
 }
 },{"jquery":47,"pixi.js":51}]},{},[53]);
