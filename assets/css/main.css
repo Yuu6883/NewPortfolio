@@ -1,5 +1,6 @@
 :root {
     --light-theme-background: rgb(1, 88, 127);
+    --background: rgba(255,255,255,0.75);
 }
 
 .theme-color {
@@ -16,12 +17,21 @@ body, html {
     touch-action: none;
 }
 
+li {
+    display: inline;
+}
+
 body {
     position: relative;
 }
 
 span {
     font-weight: bold;
+}
+
+#tabs {
+    border: none!important;
+    height: 80%;
 }
 
 #main-panel {
@@ -33,13 +43,19 @@ span {
     z-index: 99;
 }
 
+.card {
+    background-color: var(--background);
+    min-width: 340px;
+    width: 70%;
+}
+
 #toggle {
     position: absolute;
     padding-left: 5px;
     padding-right: 5px;
     bottom: 10px;
     right: 10px;
-    background-color: transparent;
+    background-color: var(--background);
     color: white;
 }
 

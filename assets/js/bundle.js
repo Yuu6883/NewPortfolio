@@ -54852,8 +54852,9 @@ $(window).on("load", () => {
         $(".logo-static")
             .show()
             .animate({ top: "60%" }, 200, function() {
-                $(this).animate({ top: "0%", marginTop: "10px" }, 500, () => {
-                    $(this).addClass("night-logo");
+                $(this).animate({ top: "-20%", marginTop: "10px" }, 500, () => {
+                    // $(this).addClass("night-logo");
+                    $(this).fadeOut();
                     $("#main-panel").fadeIn();
                     init();
                 });
@@ -54963,13 +54964,14 @@ const init = () => {
             nightMode();
             content.text("Light Mode");
             $(":root").prop("style").setProperty("--light-theme-background", " white ");
-            $(".logo").css("backgroundColor", "rgba(255,255,255, 0.4)");
+            $(":root").prop("style").setProperty("--background", " rgba(255,255,255,0.1) ");
+            
         } else {
             // Switching to light mode
             lightMode();
             content.text("Night Mode");
             $(":root").prop("style").setProperty("--light-theme-background", " rgb(1, 88, 127) ");
-            $(".logo").css("backgroundColor", "rgba(255,255,255, 0.1)");
+            $(":root").prop("style").setProperty("--background", " rgba(255,255,255,0.75) ");
         }
     });
 

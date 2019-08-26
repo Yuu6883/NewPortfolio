@@ -16,26 +16,77 @@
 
         <div id="title-bar">
             <div id="nav-bar" class="theme-color">
-                <button class="uk-button nav-button uk-padding-remove uk-margin-right uk-float-left">
-                    <span uk-icon="icon: home; ratio: 2" class="theme-color"></span><br>
-                    <span class="theme-color">Home</span>
-                </button>
-                <button class="uk-button nav-button uk-padding-remove uk-margin-right uk-float-left">
-                    <span uk-icon="icon: code; ratio: 2" class="theme-color"></span><br>
-                    <span class="theme-color">Blog</span>
-                </button>
-                <button class="uk-button nav-button uk-padding-remove uk-margin-left uk-float-right">                
-                    <span uk-icon="icon: user; ratio: 2" class="theme-color"></span><br>
-                    <span class="theme-color">About</span>
-                </button>
-                <button class="uk-button nav-button uk-padding-remove uk-margin-left uk-float-right">
-                    <span uk-icon="icon: server; ratio: 2" class="theme-color"></span><br>
-                    <span class="theme-color">Projects</span>
-                </button>
+                <ul class="uk-subnav" uk-tab="connect: #tabs; animation: uk-animation-fade">
+                    <li>
+                        <a href="#"><button class="uk-button nav-button uk-padding-remove uk-float-left">
+                            <span uk-icon="icon: home; ratio: 2" class="theme-color"></span><br>
+                            <span class="theme-color">Home</span>
+                        </button></a>               
+                    </li>
+                    <li>
+                        <a href="#"><button class="uk-button nav-button uk-padding-remove uk-float-left">
+                            <span uk-icon="icon: code; ratio: 2" class="theme-color"></span><br>
+                            <span class="theme-color">Blog</span>
+                        </button></a>          
+                    </li>
+                    <li>
+                        <a href="#"><button class="uk-button nav-button uk-padding-remove uk-float-right">
+                            <span uk-icon="icon: server; ratio: 2" class="theme-color"></span><br>
+                            <span class="theme-color">Projects</span>
+                        </button></a>            
+                    </li>    
+                    <li>
+                        <a href="#"><button class="uk-button nav-button uk-padding-remove uk-float-right">                
+                            <span uk-icon="icon: user; ratio: 2" class="theme-color"></span><br>
+                            <span class="theme-color">About</span>
+                        </button></a>          
+                    </li>
+                </ul>
             </div>
         </div>
 
-        <button class="uk-button" id="toggle">
+        <ul class="uk-switcher uk-margin uk-flex uk-flex-center uk-panel-scrollable" id="tabs">
+            <li>
+                <div class="uk-card uk-card-body uk-position-center card">
+                    <h1 class="theme-color uk-text-center uk-margin-remove">John's Homepage</h1>
+                </div>
+            </li>
+            <li>
+                <div class="uk-card uk-card-body uk-position-center card">
+                    <h1 class="theme-color uk-text-center uk-margin-remove">My Blog</h1>
+                </div>        
+            </li>
+            <li class="uk-height-large">
+                <div class="uk-card uk-card-body uk-margin uk-width-1-1 card">
+                    <div class="uk-card uk-card-body uk-margin">
+                        <h1 class="theme-color uk-text-center uk-margin-remove">Project 1</h1>
+                    </div>
+                </div>
+                <div class="uk-card uk-card-body uk-margin uk-width-1-1 card">
+                    <div class="uk-card uk-card-body uk-margin">
+                        <h1 class="theme-color uk-text-center uk-margin-remove">Project 2</h1>
+                    </div>
+                </div>
+                <div class="uk-card uk-card-body uk-margin uk-width-1-1 card">
+                    <div class="uk-card uk-card-body uk-margin">
+                        <h1 class="theme-color uk-text-center uk-margin-remove">Project 3</h1>
+                    </div>
+                </div>
+                <div class="uk-card uk-card-body uk-margin uk-width-1-1 card">
+                    <div class="uk-card uk-card-body uk-margin">
+                        <h1 class="theme-color uk-text-center uk-margin-remove">Project 4</h1>
+                    </div>
+                </div>    
+            </li>
+            <li>
+                <div class="uk-card uk-card-body uk-height-large">
+                    <p>About Me</p>
+                </div>
+            </li>
+        </ul>        
+    
+
+        <button class="uk-button theme-color" id="toggle">
             <span class="glyphicon glyphicon-adjust"></span>
             <span>Night Mode</span>
         </button>
