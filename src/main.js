@@ -54,9 +54,13 @@ const init = () => {
     nightBackground.anchor.set(0.5, 0.5);
     textureMap.anchor.set(0.5, 0.5);
 
+    const r = (a, b) => (Math.random() < 0.5 ? -1 : 1) * (a + Math.random() * (b - a));
+
     let currentPos = { x: 0, y: 0 };
+    let dir = { x: r(4, 8), y: r(4, 8) };
     /** @type {JQuery.MouseMoveEvent|JQuery.TouchMoveEvent} */
     let lastEvent;
+    let timestamp;
 
     /** @param {JQuery.MouseMoveEvent|JQuery.TouchMoveEvent} e */
     const changeView = (e, touch) => {
@@ -80,7 +84,27 @@ const init = () => {
         depthFilter.scale.set(x / factor, y / factor / (touch ? 2 : 1));
 
         lastEvent = e;
+        timestamp = Date.now();
     }
+
+    // Update view
+    setInterval(() => {
+        if (lastEvent && (Date.now() - timestamp < 3000)) return;
+
+        let x = currentPos.x + dir.x;
+        let y = currentPos.y + dir.y;
+        let hw = lightBackground.width / 2;
+        let hh = lightBackground.height / 2;
+
+        // Bounce
+        if (x < -hw || x > hw) dir.x = -dir.x;
+        if (y < -hh || y > hh) dir.y = -dir.y;
+
+        currentPos.x = x = clamp(x, -hw, hw);
+        currentPos.y = y = clamp(y, -hh, hh);
+
+        depthFilter.scale.set(x / DesktopFactor, y / DesktopFactor);
+    }, 15);
 
     $(window)
         .bind("mousemove", changeView)
@@ -109,6 +133,13 @@ const init = () => {
         }
     }
 
+    if (!localStorage.light) {
+        nightMode();
+        $("#toggle").children().eq(1).text("Light Mode");
+        $(":root").prop("style").setProperty("--light-theme-background", " white ");
+        $(":root").prop("style").setProperty("--background", " rgba(255,255,255,0.1) ");
+    }
+
     $("#toggle").click(function() {
 
         if (modeChanging) return;
@@ -121,6 +152,8 @@ const init = () => {
             content.text("Light Mode");
             $(":root").prop("style").setProperty("--light-theme-background", " white ");
             $(":root").prop("style").setProperty("--background", " rgba(255,255,255,0.1) ");
+
+            delete localStorage.light;
             
         } else {
             // Switching to light mode
@@ -128,6 +161,8 @@ const init = () => {
             content.text("Night Mode");
             $(":root").prop("style").setProperty("--light-theme-background", " rgb(1, 88, 127) ");
             $(":root").prop("style").setProperty("--background", " rgba(255,255,255,0.75) ");
+
+            localStorage.light = "y";
         }
     });
 
