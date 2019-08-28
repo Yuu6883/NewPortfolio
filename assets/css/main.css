@@ -65,6 +65,20 @@ span {
     width: 70%;
 }
 
+.project-preview {
+    width: 150px;
+    height: 150px;
+    border-radius: 10%;
+}
+
+.read-more {
+    border: 2px solid var(--light-theme-background)!important;
+}
+
+.read-more:hover {
+    background-color: var(--background)!important;
+}
+
 #toggle {
     position: absolute;
     padding-left: 5px;

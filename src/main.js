@@ -1,5 +1,6 @@
 const $ = window.$ = require("jquery");
 const PIXI = require("pixi.js");
+const Swal = require("sweetalert2").default;
 
 $(window).on("load", () => {
 
@@ -28,6 +29,14 @@ const init = () => {
 
     let app = new PIXI.Application({ width: window.innerWidth, height: window.innerHeight, backgroundColor: 0xffffff });
     app.renderer.plugins.interaction.autoPreventDefault = false;
+
+    $(".read-more").click(() => {
+        Swal.fire({
+            title: "Ops...",
+            html: "This function is currently unavailable.",
+            type: "warning"
+        })
+    });
 
     $(app.view)
         .css("position", "fixed")
