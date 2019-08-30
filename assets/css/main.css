@@ -23,7 +23,6 @@ body, html {
     overflow: hidden;
     touch-action: none;
     -webkit-user-select: none;
-    font-size: large!important;
 }
 
 li {
