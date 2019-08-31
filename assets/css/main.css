@@ -34,6 +34,10 @@ li {
     background-color: var(--background);
 }
 
+.indent {
+    text-indent: 2em;
+}
+
 body {
     position: relative;
 }
