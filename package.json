@@ -19,7 +19,7 @@
   "homepage": "https://github.com/Yuu6883/NewPortfolio#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "pixi.js": "^5.1.1",
     "sweetalert2": "^8.16.3",
     "three": "^0.107.0"
