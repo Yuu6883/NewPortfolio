@@ -1,3 +1,4 @@
-### [My old portfolio](https://yuu6883.github.io/OldPortfolio/)
+# [My old portfolio](https://yuu6883.github.io/OldPortfolio/)
 ![](https://i.imgur.com/ovqaDpn.png)
-Originally homework (a portfolio) for COGS187A
+### Uhhh the only special thing about this is the fake 3D Minecraft background made with PIXI.js displacement filter (inspired by [this post](https://observablehq.com/@a10k/pixijs-3d-effect))
+##### Originally homework for COGS187A (bad class)
