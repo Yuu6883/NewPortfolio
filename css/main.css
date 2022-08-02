@@ -131,6 +131,10 @@ span {
     height: 110px;
 }
 
+.uk-panel-scrollable {
+    resize: none !important;
+}
+
 ::-webkit-scrollbar {
     width: 0px;
 }
