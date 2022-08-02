@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1, minimum-scale=1, height=device-height, target-densitypi=device-dpi"
+        />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <link rel="shortcut icon" href="favicon.ico" />
+        <link rel="stylesheet" href="css/main.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/css/uikit-core.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/js/uikit-core.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/js/uikit-icons.min.js"></script>
+        <title>Yuu Portfolio</title>
+    </head>
+    <body>
+        <div id="main-panel">
+            <div id="title-bar">
+                <div id="nav-bar" class="theme-color">
+                    <ul
+                        class="uk-subnav"
+                        uk-tab="connect: #tabs; animation: uk-animation-fade"
+                    >
+                        <li class="uk-padding-remove uk-margin-left nav-li">
+                            <a href="#"
+                                ><button
+                                    class="uk-button nav-button uk-padding-remove"
+                                >
+                                    <span
+                                        uk-icon="icon: home; ratio: 2"
+                                        class="theme-color"
+                                    ></span
+                                    ><br />
+                                    <span class="theme-color">Home</span>
+                                </button></a
+                            >
+                        </li>
+                        <li class="uk-padding-remove uk-margin-left nav-li">
+                            <a href="#"
+                                ><button
+                                    class="uk-button nav-button uk-padding-remove"
+                                >
+                                    <span
+                                        uk-icon="icon: code; ratio: 2"
+                                        class="theme-color"
+                                    ></span
+                                    ><br />
+                                    <span class="theme-color">Blog</span>
+                                </button></a
+                            >
+                        </li>
+                        <li class="uk-padding-remove uk-margin-left nav-li">
+                            <a href="#"
+                                ><button
+                                    class="uk-button nav-button uk-padding-remove"
+                                >
+                                    <span
+                                        uk-icon="icon: server; ratio: 2"
+                                        class="theme-color"
+                                    ></span
+                                    ><br />
+                                    <span class="theme-color">Projects</span>
+                                </button></a
+                            >
+                        </li>
+                        <li class="uk-padding-remove uk-margin-left nav-li">
+                            <a href="#"
+                                ><button
+                                    class="uk-button nav-button uk-padding-remove"
+                                >
+                                    <span
+                                        uk-icon="icon: user; ratio: 2"
+                                        class="theme-color"
+                                    ></span
+                                    ><br />
+                                    <span class="theme-color">About</span>
+                                </button></a
+                            >
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <ul
+                class="uk-switcher uk-margin uk-flex uk-flex-center uk-panel-scrollable"
+                id="tabs"
+            >
+                <li class="uk-height-large uk-width-2-5@m">
+                    <div class="uk-text-center uk-margin-xlarge-top">
+                        <img
+                            src="https://avatars2.githubusercontent.com/u/38842891"
+                            class="avatar uk-margin uk-animation-fade"
+                        />
+                        <div class="uk-card uk-card-body uk-width-1-1 card">
+                            <h1
+                                class="theme-color uk-heading uk-text-center uk-margin-remove bold"
+                            >
+                                Yuu
+                            </h1>
+                            <h3 class="theme-color uk-margin-top bold">
+                                Full Stack Web Developer & Designer
+                            </h3>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="uk-card uk-card-body uk-position-center card">
+                        <h1 class="theme-color uk-text-center uk-margin-remove">
+                            Coming Soon...
+                        </h1>
+                    </div>
+                </li>
+                <li class="uk-height-large uk-width-3-5@m">
+                    <div
+                        class="uk-card uk-width-1-1 uk-card-body card uk-margin-bottom"
+                    >
+                        <div class="uk-card-header uk-padding-remove">
+                            <h4 class="theme-color">More to be added</h4>
+                        </div>
+                    </div>
+                </li>
+                <li class="uk-width-3-5@m">
+                    <div
+                        class="uk-card uk-width-1-1 uk-card-body card uk-margin-bottom uk-margin-xlarge-top uk-text-center"
+                    >
+                        <div>
+                            <span uk-icon="github" class="theme-color"></span>
+                            <a
+                                class="theme-color uk-heading uk-text-center uk-margin-remove bold"
+                                href="https://github.com/Yuu6883"
+                                >GitHub/Yuu6883</a
+                            >
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <button class="uk-button theme-color" id="toggle">
+                <span class="glyphicon glyphicon-adjust"></span>
+                <span>Night Mode</span>
+            </button>
+        </div>
+        <script src="./js/bundle.js"></script>
+    </body>
+</html>

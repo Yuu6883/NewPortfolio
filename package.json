@@ -1,0 +1,18 @@
+{
+    "name": "portfolio2019",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "build": "browserify index.js -o public/js/bundle.js"
+    },
+    "author": "Yuu6883",
+    "license": "ISC",
+    "dependencies": {
+        "jquery": "^3.5.0",
+        "pixi.js": "^5.1.1",
+        "sweetalert2": "^8.16.3"
+    },
+    "devDependencies": {
+        "browserify": "^17.0.0"
+    }
+}
