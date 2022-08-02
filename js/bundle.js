@@ -3,37 +3,21 @@ const $ = (window.$ = require("jquery"));
 const PIXI = require("pixi.js");
 const Swal = require("sweetalert2").default;
 
-$(window).on("load", () => {
-    setTimeout(() => {
-        $(".logo").hide();
-        $(".logo-static")
-            .show()
-            .animate({ top: "60%" }, 200, function () {
-                $(this).animate({ top: "-20%", marginTop: "10px" }, 500, () => {
-                    // $(this).addClass("night-logo");
-                    $(this).fadeOut();
-                    $("#main-panel").fadeIn();
-                    init();
-                });
-            });
-    }, 600);
-});
-
 const clamp = (value, min, max) =>
     value < min ? min : value > max ? max : value;
 
 const DesktopFactor = 80;
 const MobileFactor = 30;
 
-const init = () => {
-    let app = new PIXI.Application({
+document.body.onload = () => {
+    const app = new PIXI.Application({
         width: window.innerWidth,
         height: window.innerHeight,
         backgroundColor: 0xffffff,
     });
     app.renderer.plugins.interaction.autoPreventDefault = false;
 
-    $(".read-more").click(() => {
+    $(".read-more").on("click", () => {
         Swal.fire({
             title: "Ops...",
             html: "This function is currently unavailable.",
@@ -41,36 +25,29 @@ const init = () => {
         });
     });
 
-    $(app.view)
-        .css("position", "fixed")
-        .css("top", "0px")
-        .css("left", "0px")
-        .css("display", "none")
-        .fadeIn(1000);
-
     document.body.append(app.view);
 
-    let mobile = window.innerWidth < window.innerHeight;
-    let lightBackground = PIXI.Sprite.from(
-        $(mobile ? "#geisel-light-texture" : "#light-texture")[0]
+    const mobile = window.innerWidth < window.innerHeight;
+    const lightBackground = PIXI.Sprite.from(
+        mobile ? "img/geisel-light.jpg" : "img/light.png"
     );
-    let nightBackground = PIXI.Sprite.from(
-        $(mobile ? "#geisel-night-texture" : "#night-texture")[0]
+    const nightBackground = PIXI.Sprite.from(
+        mobile ? "img/geisel-night.jpg" : "img/night.png"
     );
-    let textureMap = PIXI.Sprite.from(
-        $(mobile ? "#geisel-texture-map" : "#texture-map")[0]
+    const depthMap = PIXI.Sprite.from(
+        mobile ? "img/geisel-map.jpg" : "img/map.png"
     );
 
     app.stage.addChild(nightBackground);
     app.stage.addChild(lightBackground);
-    app.stage.addChild(textureMap);
+    app.stage.addChild(depthMap);
 
-    let depthFilter = new PIXI.filters.DisplacementFilter(textureMap);
+    nightBackground.position.set(0, 0);
+    lightBackground.position.set(0, 0);
+    depthMap.position.set(0, 0);
+
+    const depthFilter = new PIXI.filters.DisplacementFilter(depthMap);
     app.stage.filters = [depthFilter];
-
-    lightBackground.anchor.set(0.5, 0.5);
-    nightBackground.anchor.set(0.5, 0.5);
-    textureMap.anchor.set(0.5, 0.5);
 
     const r = (a, b) =>
         (Math.random() < 0.5 ? -1 : 1) * (a + Math.random() * (b - a));
@@ -79,7 +56,7 @@ const init = () => {
     let dir = { x: r(4, 8), y: r(4, 8) };
     /** @type {JQuery.MouseMoveEvent|JQuery.TouchMoveEvent} */
     let lastEvent;
-    let timestamp;
+    let timestamp = Date.now();
 
     /** @param {JQuery.MouseMoveEvent|JQuery.TouchMoveEvent} e */
     const changeView = (e, touch) => {
@@ -89,8 +66,8 @@ const init = () => {
         }
 
         if (!lastEvent) return void (lastEvent = e);
-        let deltaX = e.clientX - lastEvent.clientX;
-        let deltaY = e.clientY - lastEvent.clientY;
+        const deltaX = e.clientX - lastEvent.clientX;
+        const deltaY = e.clientY - lastEvent.clientY;
 
         let x = currentPos.x + deltaX;
         let y = currentPos.y + deltaY;
@@ -114,13 +91,21 @@ const init = () => {
     };
 
     // Update view
-    setInterval(() => {
+    const update = () => {
+        if (depthMap.texture.valid) {
+            app.view.width = depthMap.width;
+            app.view.height = depthMap.height;
+            app.view.style.opacity = "100%";
+            app.renderer.resize(depthMap.width, depthMap.height);
+        }
+        requestAnimationFrame(update);
+
         if (lastEvent && Date.now() - timestamp < 3000) return;
 
         let x = currentPos.x + dir.x;
         let y = currentPos.y + dir.y;
-        let hw = lightBackground.width / 2;
-        let hh = lightBackground.height / 2;
+        const hw = lightBackground.width / 2;
+        const hh = lightBackground.height / 2;
 
         // Bounce
         if (x < -hw || x > hw) dir.x = -dir.x;
@@ -130,11 +115,13 @@ const init = () => {
         currentPos.y = y = clamp(y, -hh, hh);
 
         depthFilter.scale.set(x / DesktopFactor, y / DesktopFactor);
-    }, 15);
+    };
+
+    requestAnimationFrame(update);
 
     $(window)
-        .bind("mousemove", changeView)
-        .bind("touchmove", (e) => changeView(e, true));
+        .on("mousemove", changeView)
+        .on("touchmove", (e) => changeView(e, true));
 
     let modeChanging = false;
 
@@ -169,7 +156,7 @@ const init = () => {
             .setProperty("--background", " rgba(255,255,255,0.1) ");
     }
 
-    $("#toggle").click(function () {
+    $("#toggle").on("click", function () {
         if (modeChanging) return;
 
         let content = $(this).children().eq(1);
@@ -192,40 +179,14 @@ const init = () => {
             content.text("Night Mode");
             $(":root")
                 .prop("style")
-                .setProperty("--light-theme-background", " rgb(1, 88, 127) ");
+                .setProperty("--light-theme-background", " #3d4345 ");
             $(":root")
                 .prop("style")
-                .setProperty("--background", " rgba(255,255,255,0.75) ");
+                .setProperty("--background", " rgba(255,255,255,0.25) ");
 
             localStorage.light = "y";
         }
     });
-
-    const resize = () => {
-        app.view.width = app.view.style.width = window.innerWidth;
-        app.view.height = app.view.style.height = window.innerHeight;
-
-        let hw = window.innerWidth / 2,
-            hh = window.innerHeight / 2;
-        lightBackground.position.set(hw, hh);
-        nightBackground.position.set(hw, hh);
-        textureMap.position.set(hw, hh);
-
-        let ratio = hh / hw;
-        let scale =
-            ratio > lightBackground.height / lightBackground.width
-                ? window.innerHeight / lightBackground.height
-                : window.innerWidth / lightBackground.width;
-
-        // console.log(`Image Ratio: ${(lightBackground.height / lightBackground.width).toFixed(3)}`);
-
-        textureMap.scale.set(scale + 0.1);
-        nightBackground.scale.set(scale + 0.1);
-        lightBackground.scale.set(scale + 0.1);
-    };
-
-    $(window).on("resize", resize).on("orientationchange", resize);
-    resize();
 };
 
 },{"jquery":41,"pixi.js":45,"sweetalert2":52}],2:[function(require,module,exports){
